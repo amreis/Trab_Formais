@@ -1,0 +1,12 @@
+Terminais
+{ a, b }
+Variaveis
+{ S, X }
+Inicial
+{ S }
+Regras
+{ S > aXa }
+{ S > bXb }
+{ X > a }
+{ X > b }
+{ X > S }

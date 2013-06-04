@@ -33,18 +33,34 @@ def processaRegras(linhaInicial):
     global arquivo
     for i in range(linhaInicial, len(arquivo)):
         linha = arquivo[i].strip('{ ,}\n').replace(',', '')
-        regra, dummy, prob = linha.partition('}')
+        regra = linha.partition('}')[0]
         esquerda, dummy,  direita = regra.partition(' > ')
         try:
             if (regras[esquerda] == None): regras[esquerda] = []
         except KeyError:
             regras[esquerda] = []
-        regras[esquerda].append([direita.strip(), float(prob.strip('; '))])
+        if direita.strip() in regras[esquerda]:
+            continue
+        regras[esquerda].append(direita.strip())
         
 def found(word, listOfLists):
     for l in listOfLists:
         if word in l: return True
     return False
+
+#def fecho(var, regras):
+#    parcial = []
+#    total = []
+#    for v in regras[var]:
+#       if v in variaveis: parcial.append(v)
+#        
+#    for coisa in parcial:
+#        if not (coisa in total):
+#            total.append(coisa)
+#            temp = fecho(coisa,regras)
+#        if (temp != None): total.append(temp)
+#    return total
+
 formataArquivo(sys.stdin)
 
 rang = range(len(arquivo))
@@ -65,6 +81,8 @@ for i in rang:
         break
         
 #### AWWWWWWW  YEAAAAAAAA
-print [key for key, value in regras.items() if found("barks", value)]
+print regras
+simplify(regras)
+#print [key for key, value in regras.items() if found("barks", value)]
 
 

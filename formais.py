@@ -7,7 +7,9 @@ regras = { }
 terminais = [ ]
 variaveis = [ ]
 arquivo = []
+varsCriadas =  { }
 inicial = None
+index = 0
 # { S > NP , VP }
 # [ 'S > NP VP' ]
 # { "S" : "NP VP" }
@@ -112,9 +114,9 @@ def tokenize(string):
 			buff += string[i]
 			i += 1
 		if i >= len(string): return tokens
+
 # Assumindo que a gramática está simplificada.
 def isCNF(regras):
-	print variaveis
 	deliciaDeLista = []
 	for esquerda, direita in regras.items():
 		for d in direita:
@@ -128,10 +130,69 @@ def isCNF(regras):
 			if len(quantasVar) == 2: continue
 			else: return False
 	return True
+
+
+def createVariable(token):
+    var = "_" + token + "_"
+    if var in variaveis: return var
+    else:
+        variaveis.append(var)
+        regras[var] = token
+        return var
+
+def substTerminal(term, var):
+    global regras
+    for esquerda, direita in regras.items():
+        for d in direita:
+            t = tokenize(d)
+            if len(t) >= 2:
+                if term in t:
+                    t[t.index(term)] = var
+                    s = ''.join(t)
+                    regras[esquerda].remove(d)
+                    print s
+                    regras[esquerda].append(s)
+            else: continue
+
+def chomskyfy(esquerda, lTokens, regras):
+    global index
+
+    newVarName = ""
+    oldVarName = ""
+    while True:
+        print lTokens
+        if len(lTokens) == 2:
+            regras[esquerda].append(''.join(lTokens))
+            return
+        else:
+            s = lTokens[-2] + lTokens[-1]
+            newVarName = "_V" + str(index) + "_"
+            del lTokens[-2]
+            del lTokens[-1]
+            lTokens.append(newVarName)
+            regras[newVarName] = s
+            variaveis.append(newVarName)
+            oldVarName = newVarName
+        index += 1
 ## TODO : FNC ##
 def transformToCNF(regras):
-# PARTE FODA
-	pass
+	while not isCNF(regras):
+	    for esquerda, direita in regras.items():
+	        for d in direita:
+	            t = tokenize(d)
+	            if len(t) >= 2:
+	                for token in t:
+	                    if token in terminais:
+	                        substTerminal(token, createVariable(token))
+	    copy = regras.items()
+	    for esquerda, direita in copy:
+	        for d in direita:
+	            t = tokenize(d)
+	            if len(d) >= 3:
+	                regras[esquerda].remove(d)
+	                print "CHOMSKYFY!"
+	                chomskyfy(esquerda, t, regras)
+	                print regras
 formataArquivo(sys.stdin)
 
 rang = range(len(arquivo))
@@ -153,7 +214,10 @@ for i in rang:
         
 #### AWWWWWWW  YEAAAAAAAA
 simplify(regras)
-print isCNF(regras)
+print regras
+transformToCNF(regras)
+
+print regras
 #print [key for key, value in regras.items() if found("barks", value)]
 
 

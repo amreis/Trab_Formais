@@ -16,6 +16,7 @@ gramatica = (variaveis,terminais,regras,inicial)
 
 def achaTerminais(linhaTerminais):
     global terminais
+    terminais.append(' ')
     for ter in linhaTerminais.strip('{ ,}\n').split(', '):
         terminais.append(ter)
 
@@ -75,7 +76,7 @@ def simplify(regras):
 
 	while controle != []:
 		for esquerda, direita in regras.items():
-			print controle
+
 			for d in direita:
 				if d in controle:
 					regras[esquerda].remove(d)
@@ -86,11 +87,51 @@ def simplify(regras):
 							if x in variaveis:
 								controle.append(x)
 
-	
-	
+## XGH RULEZ MANO ##
+
+
+def tokenize(string):
+	buff = ""
+	tokens = []
+	i = 0
+	while True:
+
+		if buff+string[i] in variaveis:
+			while (i < len(string)) and (buff+string[i] in variaveis):
+				buff = buff + string[i]
+				i += 1
+			tokens.append(buff)
+			buff = ""
+		elif buff+string[i] in terminais:
+			while (i < len(string)) and (buff+string[i] in terminais):
+				buff = buff + string[i]
+				i += 1
+			tokens.append(buff)
+			buff = ""
+		else:
+			buff += string[i]
+			i += 1
+		if i >= len(string): return tokens
+# Assumindo que a gramática está simplificada.
+def isCNF(regras):
+	print variaveis
+	deliciaDeLista = []
+	for esquerda, direita in regras.items():
+		for d in direita:
+			if d not in deliciaDeLista: deliciaDeLista.append(d)
+	for x in deliciaDeLista:
+		t = tokenize(x)
+		if len(t) == 1: continue
+		elif len(t) > 2 : return False
+		else:
+			quantasVar = [y for y in t if y in variaveis] # BLACK MAGICS
+			if len(quantasVar) == 2: continue
+			else: return False
+	return True
 ## TODO : FNC ##
 def transformToCNF(regras):
-	
+# PARTE FODA
+	pass
 formataArquivo(sys.stdin)
 
 rang = range(len(arquivo))
@@ -112,6 +153,7 @@ for i in rang:
         
 #### AWWWWWWW  YEAAAAAAAA
 simplify(regras)
+print isCNF(regras)
 #print [key for key, value in regras.items() if found("barks", value)]
 
 

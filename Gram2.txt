@@ -1,12 +1,30 @@
 Terminais
-{ a, b }
+{ a, b, u, v}
 Variaveis
-{ S, X }
+{ S, X, Y, Z, A, B}
 Inicial
 { S }
 Regras
-{ S > aXa }
-{ S > bXb }
-{ X > a }
-{ X > b }
-{ X > S }
+{ S > XYZ }
+{ S > YZ }
+{ S > XZ }
+{ S > XY }
+{ S > X }
+{ S > Y }
+{ S > Z }
+{ X > AXA }
+{ X > BXB }
+{ X > Z }
+{ X > AA }
+{ X > BB }
+{ Y > AYB }
+{ Y > BYA }
+{ Y > Z }
+{ Y > AB }
+{ Y > BA }
+{ A > a }
+{ B > b }
+{ Z > Zu }
+{ Z > Zv }
+{ Z > u }
+{ Z > v }

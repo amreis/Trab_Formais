@@ -1,0 +1,42 @@
+Terminais
+{ a, b, u, v}
+Variaveis
+{ S, X, Y, Z, A, B}
+Inicial
+{ S }
+Regras
+{ S > XYZ }
+{ S > YZ }
+{ S > XZ }
+{ S > XY }
+{ S > AXA }
+{ S > BXB }
+{ S > AA }
+{ S > BB }
+{ S > Zu }
+{ S > Zv }
+{ S > u }
+{ S > v }
+{ S > AYB }
+{ S > BYA }
+{ S > AB }
+{ S > BA }
+{ Y > AYB }
+{ Y > BYA }
+{ Y > AB }
+{ Y > BA }
+{ Y > Zu }
+{ Y > u }
+{ Y > v }
+{ X > AXA }
+{ X > BXB }
+{ X > AA }
+{ X > BB }
+{ X > Zu }
+{ X > Zv }
+{ X > u }
+{ X > v }
+{ Z > Zu }
+{ Z > Zv }
+{ Z > u }
+{ Z > v }

@@ -1,0 +1,14 @@
+Terminais
+{ a, b, u, v}
+Variaveis
+{ A1, A2, A3, A44, A31515 }
+Inicial
+{ A1 }
+Regras
+{ A1 > A2 A44 }
+{ A1 > A31515 }
+{ A2 > A31515 }
+{ A31515 > A3 }
+{ A31515 > A44 }
+{ A44 > a }
+{ A3 > b }

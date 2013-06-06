@@ -61,6 +61,36 @@ def found(word, listOfLists):
 #        if (temp != None): total.append(temp)
 #    return total
 
+def generatesVariable(var):
+	for x in regras[var]:
+		if x in variaveis: return True
+	return False
+## DONE ##
+def simplify(regras):
+	controle = []
+	for r,s in regras.items():
+		for x in s:
+			if x in variaveis:
+				controle.append(x)
+
+	while controle != []:
+		for esquerda, direita in regras.items():
+			print controle
+			for d in direita:
+				if d in controle:
+					regras[esquerda].remove(d)
+					controle.remove(d)
+					for x in regras[d]:
+						if not (x in regras[esquerda]):
+							regras[esquerda].append(x)
+							if x in variaveis:
+								controle.append(x)
+
+	
+	
+## TODO : FNC ##
+def transformToCNF(regras):
+	
 formataArquivo(sys.stdin)
 
 rang = range(len(arquivo))
@@ -81,7 +111,6 @@ for i in rang:
         break
         
 #### AWWWWWWW  YEAAAAAAAA
-print regras
 simplify(regras)
 #print [key for key, value in regras.items() if found("barks", value)]
 

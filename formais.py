@@ -177,7 +177,10 @@ def chomskyfy(esquerda, lTokens, regras):
             del lTokens[-2]
             del lTokens[-1]
             lTokens.append(newVarName)
-            regras[newVarName] = s
+            try:
+                regras[newVarName].append(s)
+            except KeyError:
+                regras[newVarName] = [s]
             variaveis.append(newVarName)
             oldVarName = newVarName
         index += 1
@@ -195,9 +198,10 @@ def transformToCNF(regras):
 	    for esquerda, direita in copy:
 	        for d in direita:
 	            t = tokenize(d)
-	            if len(d) >= 3:
+	            if len(t) >= 3:
 	                regras[esquerda].remove(d)
 	                #print "CHOMSKYFY!"
+	                print esquerda, t
 	                chomskyfy(esquerda, t, regras)
 	                #print regras
 formataArquivo(sys.stdin)
@@ -228,4 +232,4 @@ transformToCNF(regras)
 #print [key for key, value in regras.items() if found("barks", value)]
 for x in regras.keys():
     print x, ' :', regras[x] 
-
+print regras

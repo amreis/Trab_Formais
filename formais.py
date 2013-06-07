@@ -150,7 +150,7 @@ def substTerminal(term, var):
                     t[t.index(term)] = var
                     s = ''.join(t)
                     regras[esquerda].remove(d)
-                    print s
+                    #print s
                     regras[esquerda].append(s)
             else: continue
 
@@ -160,13 +160,20 @@ def chomskyfy(esquerda, lTokens, regras):
     newVarName = ""
     oldVarName = ""
     while True:
-        print lTokens
+        #print lTokens
         if len(lTokens) == 2:
             regras[esquerda].append(''.join(lTokens))
             return
-        else:
+        else:                        
             s = lTokens[-2] + lTokens[-1]
             newVarName = "_V" + str(index) + "_"
+#AQUI ESTÃO MINHAS CAGADAS
+            if (s not in varsCriadas.keys()):
+                varsCriadas[s] = newVarName
+            else:
+                newVarName=varsCriadas[s]
+            
+            #print varsCriadas          
             del lTokens[-2]
             del lTokens[-1]
             lTokens.append(newVarName)
@@ -190,9 +197,9 @@ def transformToCNF(regras):
 	            t = tokenize(d)
 	            if len(d) >= 3:
 	                regras[esquerda].remove(d)
-	                print "CHOMSKYFY!"
+	                #print "CHOMSKYFY!"
 	                chomskyfy(esquerda, t, regras)
-	                print regras
+	                #print regras
 formataArquivo(sys.stdin)
 
 rang = range(len(arquivo))
@@ -214,10 +221,11 @@ for i in rang:
         
 #### AWWWWWWW  YEAAAAAAAA
 simplify(regras)
-print regras
+#print regras
 transformToCNF(regras)
 
-print regras
+#print regras
 #print [key for key, value in regras.items() if found("barks", value)]
-
+for x in regras.keys():
+    print x, ' :', regras[x] 
 

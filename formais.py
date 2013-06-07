@@ -170,6 +170,7 @@ def chomskyfy(esquerda, lTokens, regras):
 #AQUI ESTÃO MINHAS CAGADAS
             if (s not in varsCriadas.keys()):
                 varsCriadas[s] = newVarName
+                index += 1
             else:
                 newVarName=varsCriadas[s]
             
@@ -178,9 +179,12 @@ def chomskyfy(esquerda, lTokens, regras):
             del lTokens[-1]
             lTokens.append(newVarName)
             try:
-                regras[newVarName].append(s)
+                if s not in regras[newVarName]:
+                    regras[newVarName].append(s)
+                else: index -= 1
             except KeyError:
                 regras[newVarName] = [s]
+                index -= 1
             variaveis.append(newVarName)
             oldVarName = newVarName
         index += 1

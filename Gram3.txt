@@ -5,7 +5,7 @@ Variaveis
 Inicial
 { A1 }
 Regras
-{ A1 > A2 A44 }
+{ A1 > A2A44 }
 { A1 > A31515 }
 { A2 > A31515 }
 { A31515 > A3 }

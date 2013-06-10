@@ -19,6 +19,7 @@ gramatica = (variaveis,terminais,regras,inicial)
 def achaTerminais(linhaTerminais):
     global terminais
     terminais.append(' ')
+    terminais.append('&')
     for ter in linhaTerminais.strip('{ ,}\n').split(', '):
         terminais.append(ter)
 
@@ -48,7 +49,7 @@ def processaRegras(linhaInicial):
         
 def found(word, listOfLists):
     for l in listOfLists:
-        if word in l: return True
+        if word in tokenize(l): return True
     return False
 
 #def fecho(var, regras):
@@ -68,17 +69,52 @@ def generatesVariable(var):
 	for x in regras[var]:
 		if x in variaveis: return True
 	return False
+	
+def excluiVazioRegra(esquerda, lTokens, regras, lVazios):
+
+    if len(lTokens) == 1: return []
+    vaziosNaRegra = [t for t in lVazios if t in lTokens]
+    direita = ''.join(lTokens)
+    print direita
+    matriz = [0 for x in vaziosNaRegra]
+    print matriz
+    for i in range(len(matriz)):
+        s = direita.replace(vaziosNaRegra[i], '', 1)
+        matriz[i] = s
+    for x in matriz:
+        for y in excluiVazioRegra(esquerda, tokenize(x), regras, lVazios):
+            if y not in matriz:
+                matriz.append(y)
+    return matriz
+    
+def tiraVazios(regras):
+    levamEmVazio = [key for key, value in regras.items() if found("&", value)]
+    print levamEmVazio
+    for x in levamEmVazio:
+        regras[x].remove('&')
+    for esquerda, direita in regras.items():
+        for d in direita:
+            print d
+            t = tokenize(d)
+            for x in levamEmVazio:
+                if x in t:
+                    for var in excluiVazioRegra(esquerda, t, regras, levamEmVazio):
+                        if var not in regras[esquerda]:
+                            regras[esquerda].append(var)
 ## DONE ##
 def simplify(regras):
+	# Produções vazias.
+	tiraVazios(regras)
 	controle = []
 	for r,s in regras.items():
 		for x in s:
 			if x in variaveis:
 				controle.append(x)
 
+
+    # Produções que substituem variáveis.
 	while controle != []:
 		for esquerda, direita in regras.items():
-
 			for d in direita:
 				if d in controle:
 					regras[esquerda].remove(d)
@@ -205,7 +241,6 @@ def transformToCNF(regras):
 	            if len(t) >= 3:
 	                regras[esquerda].remove(d)
 	                #print "CHOMSKYFY!"
-	                print esquerda, t
 	                chomskyfy(esquerda, t, regras)
 	                #print regras
 formataArquivo(sys.stdin)
@@ -236,4 +271,4 @@ transformToCNF(regras)
 #print [key for key, value in regras.items() if found("barks", value)]
 for x in regras.keys():
     print x, ' :', regras[x] 
-print regras
+

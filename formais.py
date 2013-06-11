@@ -16,13 +16,26 @@ index = 0
 
 gramatica = (variaveis,terminais,regras,inicial)
 
+class NoDerivacao:
+    """
+    nome => String
+    posicao => Tupla (int, int)
+    esquerda => NoDerivacao(...)
+    direita => NoDerivacao(...)
+    """
+    def __init__(self, nome, posicao, esquerda, direita):
+        self.nome = nome
+        self.posicao = posicao
+        self.esquerda = esquerda
+        self.direita = direita
+        
 def achaTerminais(linhaTerminais):
     """
     Função que processa a linha de definição de terminais no arquivo e os salva
     na lista de terminais.
     """
     global terminais
-    terminais.append(' ') # Resolvemos considerar espaços como terminais.
+
     terminais.append('&') # Palavra vazia deve ser considerada um terminal para
                           # que a função tokenize funcione corretamente
     for ter in linhaTerminais.strip('{ ,}\n').split(', '):
@@ -87,7 +100,7 @@ def generatesVariable(var):
 def excluiVazioRegra(esquerda, lTokens, regras, lVazios):
     """
     Se uma regra leva a variáveis que levam à palavra vazia, cria produções 
-    que "simulam" a palavra vazia seguindo o algoritmo do texto
+    que "simulam" a palavra vazia seguindo o algorinostmo do texto
     """
     # Se chegou em variáveis unitárias, não há mais o que substituir.
     if len(lTokens) == 1: return []
@@ -346,29 +359,99 @@ def transformToCNF(regras):
                 if len(t) >= 3:
                     regras[esquerda].remove(d)
                     chomskyfy(esquerda, t, regras)
-formataArquivo(sys.stdin)
 
-rang = range(len(arquivo))
-for i in rang:
+def printRegras(regras):    
+    for x in regras.keys():
+        print x, ' :', regras[x] 
 
-    if arquivo[i] == "Terminais":
-        achaTerminais(arquivo[i+1])
+def combine(pos1, pos2,matriz):
 
+    nos1 = matriz[pos1[0]][pos1[1]]
+    nos2 = matriz[pos2[0]][pos2[1]]
+    lista = []
+    for i in range(len(nos1)):
+        NoA = nos1[i]
+        for j in range(len(nos2)):
+            NoB = nos2[j]
+            st = NoA.nome + " " + NoB.nome
+            resultados = [NoDerivacao(x, (i,j), NoA, NoB) for x, y in regras.items() if st in y]
+            lista.extend(resultados)
+    return lista
+def roldana(posicao, matriz):
+    iHoriz = posicao[0]
+    jHoriz = posicao[0]
+    iVerti = posicao[0] + 1
+    jVerti = posicao[1]
+    while True:
+        if jHoriz == posicao[1]: break
+        matriz[posicao[0]][posicao[1]].extend(combine((iHoriz,jHoriz), (iVerti, jVerti), matriz))
+        
+        jHoriz += 1
+        iVerti += 1
+        
+def printMatriz(matriz, n):
 
-    elif arquivo[i] == "Variaveis":
-        achaVariaveis(arquivo[i+1])
-
-    elif arquivo[i] == "Inicial":
-        inicial = arquivo[i+1].strip('{ ,}\n').split(', ')[0] #OMG
-
-    elif arquivo[i] == "Regras":
-        processaRegras(i+1)
-        break
+    for j in range(n):
+        for i in range(n-j):
+            for x in matriz[i][j]:
+                print x.nome + "("+str(i)+", "+str(j)+")"
+            j+=1
+def getVariables(terminal, pos):
     
+    lista = [NoDerivacao(x, (pos,pos), None, None)  for x, y in regras.items() if found(terminal, y)]
+
+    return lista
+    
+def parseCYK(frase, regras):
+    splitted = frase.strip().split(' ')
+    n = len(splitted)
+
+    matriz = [[[] for x in range(n)] for y in range(n)]
+    for i in range(n):
+        matriz[i][i] = getVariables(splitted[i], i)
+
+    
+    for j in range(n):
+        for i in range(n-j):
+            roldana((i,j), matriz)
+            j+=1
+    printMatriz(matriz, n)  
+    
+def pedeFrase():
+    return raw_input()
+
 #### AWWWWWWW  YEAAAAAAAA
-simplify(regras)
-transformToCNF(regras)
 
-for x in regras.keys():
-    print x, ' :', regras[x] 
+if __name__ == '__main__':
+    argv = sys.argv
+    if (len(argv) != 2):
+        filename = raw_input("Indique o arquivo a ser usado como gramática: ")
+    else:
+        filename = sys.argv[1]
+    print filename
+    arq = open(filename, "r")
+    formataArquivo(arq)
 
+    rang = range(len(arquivo))
+    for i in rang:
+
+        if arquivo[i] == "Terminais":
+            achaTerminais(arquivo[i+1])
+
+
+        elif arquivo[i] == "Variaveis":
+            achaVariaveis(arquivo[i+1])
+
+        elif arquivo[i] == "Inicial":
+            inicial = arquivo[i+1].strip('{ ,}\n').split(', ')[0] #OMG
+
+        elif arquivo[i] == "Regras":
+            processaRegras(i+1)
+            break
+    
+    simplify(regras)
+    transformToCNF(regras)
+    assert isCNF(regras)
+    printRegras(regras)
+    frase = pedeFrase()
+    parseCYK(frase, regras)

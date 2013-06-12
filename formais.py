@@ -39,7 +39,7 @@ def achaTerminais(linhaTerminais):
     terminais.append('&') # Palavra vazia deve ser considerada um terminal para
                           # que a função tokenize funcione corretamente
     for ter in linhaTerminais.strip('{ ,}\n').split(', '):
-        terminais.append(ter)
+        terminais.append(ter.lower())
 
 def achaVariaveis(linhaVariaveis):
     """
@@ -215,8 +215,10 @@ def tokenize(string):
             tokens.append(buff)
             buff = ""
         else:
-            buff += string[i]
+            if (string[i] != " "):
+                buff += string[i]
             i += 1
+
     return tokens
 
 
@@ -397,18 +399,24 @@ def printMatriz(matriz, n):
                 print x.nome + "("+str(i)+", "+str(j)+")"
             j+=1
 def getVariables(terminal, pos):
-    
-    lista = [NoDerivacao(x, (pos,pos), None, None)  for x, y in regras.items() if found(terminal, y)]
-
+    if terminal in terminais:
+        lista = [NoDerivacao(x, (pos,pos), None, None)  for x, y in regras.items() if found(terminal, y)]
+    else:
+        print """Sua frase contém um terminal que não está definido na gramática.
+            Por favor, tente novamente."""
+        raise Exception
     return lista
     
 def parseCYK(frase, regras):
-    splitted = frase.strip().split(' ')
+    splitted = frase.lower().strip().split(' ')
     n = len(splitted)
 
     matriz = [[[] for x in range(n)] for y in range(n)]
-    for i in range(n):
-        matriz[i][i] = getVariables(splitted[i], i)
+    try:
+        for i in range(n):
+            matriz[i][i] = getVariables(splitted[i], i)
+    except Exception:
+        return None
 
     
     for j in range(n):
@@ -416,9 +424,9 @@ def parseCYK(frase, regras):
             roldana((i,j), matriz)
             j+=1
     printMatriz(matriz, n)  
-    
+    return 1 # DUMMY
 def pedeFrase():
-    return raw_input()
+    return raw_input("> Digite a frase para fazer o parsing: \n\t")
 
 #### AWWWWWWW  YEAAAAAAAA
 
@@ -453,5 +461,9 @@ if __name__ == '__main__':
     transformToCNF(regras)
     assert isCNF(regras)
     printRegras(regras)
+    
     frase = pedeFrase()
-    parseCYK(frase, regras)
+    result = parseCYK(frase, regras)
+    while result == None:
+        frase = pedeFrase()
+        result = parseCYK(frase, regras)

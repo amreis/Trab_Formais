@@ -234,7 +234,7 @@ def isCNF(regras):
     for esquerda, direita in regras.items():
         for d in direita:
             if d not in deliciaDeLista: deliciaDeLista.append(d)
-    print deliciaDeLista
+
     for x in deliciaDeLista:
         t = tokenize(x)
 
@@ -370,7 +370,7 @@ def printRegras(regras):
     for x in regras.keys():
         print x, ' :', regras[x] 
 
-def combine(pos1, pos2,matriz):
+def combine(pos1, pos2,posFinal, matriz):
 
     nos1 = matriz[pos1[0]][pos1[1]]
     nos2 = matriz[pos2[0]][pos2[1]]
@@ -380,7 +380,7 @@ def combine(pos1, pos2,matriz):
         for j in range(len(nos2)):
             NoB = nos2[j]
             st = NoA.nome + " " + NoB.nome
-            resultados = [NoDerivacao(x, (i,j), NoA, NoB) for x, y in regras.items() if st in y]
+            resultados = [NoDerivacao(x, posFinal, NoA, NoB) for x, y in regras.items() if st in y]
             lista.extend(resultados)
     return lista
 def roldana(posicao, matriz):
@@ -390,7 +390,8 @@ def roldana(posicao, matriz):
     jVerti = posicao[1]
     while True:
         if jHoriz == posicao[1]: break
-        matriz[posicao[0]][posicao[1]].extend(combine((iHoriz,jHoriz), (iVerti, jVerti), matriz))
+        matriz[posicao[0]][posicao[1]].extend(combine((iHoriz,jHoriz) \
+        , (iVerti, jVerti), posicao,  matriz))
         
         jHoriz += 1
         iVerti += 1
@@ -403,12 +404,16 @@ def printMatriz(matriz, n):
                 print x.nome + "("+str(i)+", "+str(j)+")"
             j+=1
 def getVariables(terminal, pos):
+    temp = None
     if terminal in terminais:
-        lista = [NoDerivacao(x, (pos,pos), None, None)  for x, y in regras.items() if found(terminal, y)]
+        temp = NoDerivacao(terminal, (-1,-1), None, None)
+        lista = [NoDerivacao(x, (pos,pos), \
+        temp, temp) for x, y in regras.items() if found(terminal, y)]
 
     else:
-        print """Sua frase contém um terminal que não está definido na gramática.
-            Por favor, tente novamente."""
+        print """Sua frase contém um terminal que não está definido na gramática:
+                    %r
+            Por favor, tente novamente.""" % terminal
         raise Exception
     return lista
     
@@ -428,11 +433,34 @@ def parseCYK(frase, regras):
         for i in range(n-j):
             roldana((i,j), matriz)
             j+=1
-    printMatriz(matriz, n)  
-    return 1 # DUMMY
+    #printMatriz(matriz, n)  
+    return matriz # DUMMY
 def pedeFrase():
     return raw_input("> Digite a frase para fazer o parsing: \n\t")
 
+def stringArvore(NoRaiz):
+    if NoRaiz.esquerda == NoRaiz.direita:
+        return NoRaiz.nome + "(" + NoRaiz.esquerda.nome + ")"
+    else:
+        return NoRaiz.nome + "( " + stringArvore(NoRaiz.esquerda) + ", " + \
+        stringArvore(NoRaiz.direita) + ")"
+
+def mostraCelula(celula, pos):
+    # Posição da célula. Nome da célula. Células que a geram. 
+    print "Célula %r" % pos
+    if celula == []: print "\t Célula vazia."
+    for x in celula:
+        if x.esquerda.posicao == (-1,-1):
+            print "\t Nome: %s. Gerada por %r" % (x.nome, x.esquerda.nome)
+        else:
+            print "\t Nome: %s. Gerada por %s%r e %s%r." % (x.nome, x.esquerda.nome, \
+             x.esquerda.posicao, x.direita.nome, x.direita.posicao)
+def mostraTabelaCYK(matriz):
+    print len(matriz[0])
+    for j in range(n):
+        for i in range(n-j):
+            mostraCelula(matriz[i][j], [i,j])
+            j += 1
 #### AWWWWWWW  YEAAAAAAAA
 
 if __name__ == '__main__':
@@ -442,7 +470,11 @@ if __name__ == '__main__':
     else:
         filename = sys.argv[1]
     print filename
-    arq = open(filename, "r")
+    try:
+        arq = open(filename, "r")
+    except IOError:
+        print "Arquivo não existe! Tente novamente."
+        raise SystemExit, 1
     formataArquivo(arq)
 
     rang = range(len(arquivo))
@@ -470,5 +502,13 @@ if __name__ == '__main__':
     frase = pedeFrase()
     result = parseCYK(frase, regras)
     while result == None:
+        print ""
         frase = pedeFrase()
         result = parseCYK(frase, regras)
+    n = len(result[0])
+    
+    mostraTabelaCYK(result)
+    
+    for x in result[0][n-1]:
+            if x.nome == inicial:
+                print stringArvore(x)

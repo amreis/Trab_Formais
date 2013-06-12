@@ -1,5 +1,5 @@
 Terminais
-{ the, a, men, women, song, sing, old, and }
+{ the, a, men, women, song, sing, old, and, sad }
 Variaveis
 { S, NP, N, VP, Det, Adj, VI, VT , Conj}
 Inicial
@@ -22,3 +22,4 @@ Regras
 { VI > sing }
 { VT > sing }
 { Conj > and }
+{ Adj > sad }

@@ -39,7 +39,7 @@ def achaTerminais(linhaTerminais):
     terminais.append('&') # Palavra vazia deve ser considerada um terminal para
                           # que a função tokenize funcione corretamente
     for ter in linhaTerminais.strip('{ ,}\n').split(', '):
-        terminais.append(ter.lower())
+        terminais.append(ter.lower().strip())
 
 def achaVariaveis(linhaVariaveis):
     """
@@ -48,7 +48,7 @@ def achaVariaveis(linhaVariaveis):
     """
     global variaveis
     for var in linhaVariaveis.strip('{ ,}\n').split(', '):
-        variaveis.append(var)
+        variaveis.append(var.strip())
 
 def formataArquivo(arq):
     """
@@ -108,7 +108,7 @@ def excluiVazioRegra(esquerda, lTokens, regras, lVazios):
     # regra.
     vaziosNaRegra = [t for t in lVazios if t in lTokens]
     # Forma a palavra novamente a partir dos seus tokens.
-    direita = ''.join(lTokens)
+    direita = ' '.join(lTokens)
     # Cria uma lista com n entradas, onde n é o número de variáveis que levam 
     # à palavra vazia nesta regra.
     lista = [0 for x in vaziosNaRegra]
@@ -198,28 +198,28 @@ def tokenize(string):
     Função mágica que aplica a técnica de "maximal munch" para quebrar a string 
     em variáveis e terminais (ou seja, tokens).
     """
-    buff = ""
-    tokens = []
-    i = 0
-    while i < len(string):
-        if buff+string[i] in variaveis:
-            while (i < len(string)) and (buff+string[i] in variaveis):
-                buff = buff + string[i]
-                i += 1
-            tokens.append(buff)
-            buff = ""
-        elif buff+string[i] in terminais:
-            while (i < len(string)) and (buff+string[i] in terminais):
-                buff = buff + string[i]
-                i += 1
-            tokens.append(buff)
-            buff = ""
-        else:
-            if (string[i] != " "):
-                buff += string[i]
-            i += 1
+    #buff = ""
+    #tokens = []
+    #i = 0
+    #while i < len(string):
+    #    if buff+string[i] in variaveis:
+    #        while (i < len(string)) and (buff+string[i] in variaveis):
+    #            buff = buff + string[i]
+    #            i += 1
+    #        tokens.append(buff)
+    #        buff = ""
+    #    elif buff+string[i] in terminais:
+    #        while (i < len(string)) and (buff+string[i] in terminais):
+    #            buff = buff + string[i]
+    #            i += 1
+    #        tokens.append(buff)
+    #        buff = ""
+    #    else:
+    #        if (string[i] != " "):
+    #            buff += string[i]
+    #        i += 1
 
-    return tokens
+    return string.split(' ')
 
 
 def isCNF(regras):
@@ -227,13 +227,17 @@ def isCNF(regras):
     Assumindo que a gramática está simplificada, diz se ela está ou não na Forma
     Normal de Chomsky.
     """
+
+
     deliciaDeLista = []
     # deliciaDeLista é preechida com todos os lados direitos de todas as regras.
     for esquerda, direita in regras.items():
         for d in direita:
             if d not in deliciaDeLista: deliciaDeLista.append(d)
+    print deliciaDeLista
     for x in deliciaDeLista:
         t = tokenize(x)
+
         # Se o lado direito possuir somente um token, assume-se que é um terminal,
         # já que a gramática está simplificada.
         if len(t) == 1: continue
@@ -243,10 +247,10 @@ def isCNF(regras):
         else:
             # quantasVar é uma lista com todos os tokens que são variáveis
             quantasVar = [y for y in t if y in variaveis] # BLACK MAGICS
+
             # Se são exatamente duas, está ok
-            if len(quantasVar) == 2: continue
+            if len(quantasVar) != 2: return False
             # Senão, já não está na FNC.
-            else: return False
     return True
 
 
@@ -276,7 +280,7 @@ def substTerminal(term, var):
             if len(t) >= 2:
                 if term in t:
                     t[t.index(term)] = var
-                    s = ''.join(t)
+                    s = ' '.join(t)
                     regras[esquerda].remove(d)
                     #print s
                     regras[esquerda].append(s)
@@ -299,12 +303,12 @@ def chomskyfy(esquerda, lTokens, regras):
     while True:
         # Se há somente duas variáveis do lado direito, cria a regra que as gera
         if len(lTokens) == 2:
-            regras[esquerda].append(''.join(lTokens))
+            regras[esquerda].append(' '.join(lTokens))
             return
         # Se há mais do que duas variáveis do lado direito:
         else:                        
             # Pega as duas últimas variáveis
-            s = lTokens[-2] + lTokens[-1]
+            s = lTokens[-2] + " " + lTokens[-1]
             # Cria uma nova variável auxiliar
             newVarName = "_V" + str(index) + "_"
             # Se este agrupamento de variáveis ainda não foi feito
@@ -401,6 +405,7 @@ def printMatriz(matriz, n):
 def getVariables(terminal, pos):
     if terminal in terminais:
         lista = [NoDerivacao(x, (pos,pos), None, None)  for x, y in regras.items() if found(terminal, y)]
+
     else:
         print """Sua frase contém um terminal que não está definido na gramática.
             Por favor, tente novamente."""

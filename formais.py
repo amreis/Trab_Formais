@@ -146,6 +146,7 @@ def tiraVazios(regras):
                     # Exclui o vazio dessa regra e, como excluiVazioRegra retorna a lista
                     # de produções que devem ser adicionadas às regras, adiciona-as.
                     for var in excluiVazioRegra(esquerda, t, regras, levamEmVazio):
+                        var = var.strip()
                         if var not in regras[esquerda]:
                             regras[esquerda].append(var)
 
@@ -187,6 +188,7 @@ def simplify(regras):
     """
     # Produções vazias.
     tiraVazios(regras)
+
     # Produções que substituem variáveis.
     tiraTransfVariaveis(regras)
     
@@ -456,7 +458,7 @@ def mostraCelula(celula, pos):
             print "\t Nome: %s. Gerada por %s%r e %s%r." % (x.nome, x.esquerda.nome, \
              x.esquerda.posicao, x.direita.nome, x.direita.posicao)
 def mostraTabelaCYK(matriz):
-    print len(matriz[0])
+
     for j in range(n):
         for i in range(n-j):
             mostraCelula(matriz[i][j], [i,j])
@@ -508,7 +510,10 @@ if __name__ == '__main__':
     n = len(result[0])
     
     mostraTabelaCYK(result)
-    
+    flag = 0
     for x in result[0][n-1]:
             if x.nome == inicial:
                 print stringArvore(x)
+                flag = 1
+    if flag == 0:
+        print "Palavra não pertence à linguagem."

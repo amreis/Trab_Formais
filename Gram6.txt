@@ -1,0 +1,26 @@
+Terminais
+{ the, a, men, women, song, sing, old, and, sad }
+Variaveis
+{ S, NP, N, VP, Det, Adj, VI, VT , Conj}
+Inicial
+{ S }
+Regras
+{ S > NP VP }
+{ NP > N }
+{ NP > Det N }
+{ NP > Det Adj N }
+{ NP > NP Conj NP }
+{ NP > & }
+{ N > N Conj N }
+{ VP > VI }
+{ VP > VT NP }
+{ Det > the }
+{ Det > a }
+{ N > men }
+{ N > women }
+{ N > song }
+{ Adj > old }
+{ VI > sing }
+{ VT > sing }
+{ Conj > and }
+{ Adj > sad }

@@ -1,26 +1,21 @@
 Terminais
-{ the, a, men, women, song, sing, old, and, sad }
+{ a, b, u, v }
 Variaveis
-{ S, NP, N, VP, Det, Adj, VI, VT , Conj}
+{ S, X, Y, Z, A, B }
 Inicial
 { S }
 Regras
-{ S > NP VP }
-{ NP > N }
-{ NP > Det N }
-{ NP > Det Adj N }
-{ NP > NP Conj NP }
-{ NP > & }
-{ N > N Conj N }
-{ VP > VI }
-{ VP > VT NP }
-{ Det > the }
-{ Det > a }
-{ N > men }
-{ N > women }
-{ N > song }
-{ Adj > old }
-{ VI > sing }
-{ VT > sing }
-{ Conj > and }
-{ Adj > sad }
+{ S > X Y Z } 
+{ X > A X A }
+{ X > B X B }
+{ X > Z }
+{ Y > A Y B }
+{ Y > B Y A }
+{ Y > Z }
+{ A > a }
+{ B > b }
+{ Z > Z u }
+{ Z > Z v }
+{ X > & }
+{ Y > & }
+{ Z > & }

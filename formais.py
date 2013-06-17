@@ -115,7 +115,11 @@ def excluiVazioRegra(esquerda, lTokens, regras, lVazios):
     for i in range(len(lista)):
         # Para cada entrada da lista, substitui a variável correspondente pela 
         # string vazia.
-        s = direita.replace(vaziosNaRegra[i], '', 1)
+        l2 = list(lTokens)
+        print l2
+        del l2[i]
+        s = " ".join(l2)
+        #s = direita.replace(vaziosNaRegra[i], '', 1)
         # Põe de volta na lista.
         lista[i] = s
     for x in lista:
@@ -448,7 +452,7 @@ def stringArvore(NoRaiz):
         stringArvore(NoRaiz.direita) + ")"
 
 def mostraCelula(celula, pos):
-    # Posição da célula. Nome da célula. Células que a geram. 
+    # Posição da célula. Nome da célula. Células que a geram.
     print "Célula %r" % pos
     if celula == []: print "\t Célula vazia."
     for x in celula:
@@ -497,6 +501,7 @@ if __name__ == '__main__':
             break
     
     simplify(regras)
+    printRegras(regras)
     transformToCNF(regras)
     assert isCNF(regras)
     printRegras(regras)

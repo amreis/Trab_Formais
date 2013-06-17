@@ -508,12 +508,11 @@ def drawTree(self, tree, f):
 
 def criaGrafo (x,tree,usados,indice):
     #inicializa tudo
-    if x.nome not in usados and x.nome not in terminais:
+    if x.nome not in usados and x.nome != None:
         usados.append(x.nome)
     else:
-        if x.nome not in terminais:
-            x.nome=x.nome+str(indice)
-            usados.append(x.nome)
+        x.nome=x.nome+str(indice)
+        usados.append(x.nome)
         
     if x.nome not in terminais:    
         print x.nome

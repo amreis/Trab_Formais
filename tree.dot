@@ -1,0 +1,25 @@
+strict digraph  {
+	node [label="\N"];
+	S	 [label=S];
+	NP	 [label=NP];
+	S -> NP;
+	VP	 [label=VP];
+	S -> VP;
+	DT	 [label=DT];
+	NP -> DT;
+	N	 [label=N];
+	NP -> N;
+	DT -> the;
+	N -> dog;
+	NP1	 [label=NP1];
+	VP -> NP1;
+	V	 [label=V];
+	VP -> V;
+	V -> eats;
+	N1	 [label=N1];
+	NP1 -> N1;
+	DT1	 [label=DT1];
+	NP1 -> DT1;
+	DT1 -> the;
+	N1 -> meat;
+}

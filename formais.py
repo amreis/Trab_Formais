@@ -445,11 +445,16 @@ def pedeFrase():
     return raw_input("> Digite a frase para fazer o parsing: \n\t")
 
 def stringArvore(NoRaiz):
+    global index
     if NoRaiz.esquerda == NoRaiz.direita:
         return NoRaiz.nome + "(" + NoRaiz.esquerda.nome + ")"
     else:
-        return NoRaiz.nome + "( " + stringArvore(NoRaiz.esquerda) + ", " + \
-        stringArvore(NoRaiz.direita) + ")"
+        index += 1
+        string =  NoRaiz.nome + "( \n"+ "   "*index + stringArvore(NoRaiz.esquerda) \
+         + ", \n" + "   "*index + stringArvore(NoRaiz.direita) + ")"
+        index -= 1
+        return string
+        
 
 def mostraCelula(celula, pos):
     # Posição da célula. Nome da célula. Células que a geram.
@@ -512,11 +517,12 @@ if __name__ == '__main__':
         frase = pedeFrase()
         result = parseCYK(frase, regras)
     n = len(result[0])
-    
+
     mostraTabelaCYK(result)
     flag = 0
     for x in result[0][n-1]:
             if x.nome == inicial:
+                index = 0
                 print stringArvore(x)
                 flag = 1
     if flag == 0:

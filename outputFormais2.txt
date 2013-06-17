@@ -1,0 +1,337 @@
+Gram7.txt
+_V2_  : ['VP _V1_']
+_V4_  : ['Conj NP']
+_V0_  : ['Conj N']
+VI  : ['sing']
+_V1_  : ['Conj S']
+Det  : ['the', 'a']
+_V3_  : ['Adj N']
+N  : ['men', 'women', 'song', 'N _V0_']
+VP  : ['VT NP', 'sing']
+S  : ['NP VP', 'NP _V2_']
+VT  : ['sing']
+NP  : ['Det N', 'men', 'women', 'song', 'Det _V3_', 'N _V0_', 'NP _V4_']
+Conj  : ['and']
+Adj  : ['old', 'sad']
+> Digite a frase para fazer o parsing: 
+	Célula [0, 0]
+	 Nome: Det. Gerada por 'the'
+Célula [1, 1]
+	 Nome: Adj. Gerada por 'old'
+Célula [2, 2]
+	 Nome: N. Gerada por 'men'
+	 Nome: NP. Gerada por 'men'
+Célula [3, 3]
+	 Nome: Conj. Gerada por 'and'
+Célula [4, 4]
+	 Nome: N. Gerada por 'women'
+	 Nome: NP. Gerada por 'women'
+Célula [5, 5]
+	 Nome: VI. Gerada por 'sing'
+	 Nome: VP. Gerada por 'sing'
+	 Nome: VT. Gerada por 'sing'
+Célula [6, 6]
+	 Nome: Det. Gerada por 'a'
+Célula [7, 7]
+	 Nome: Adj. Gerada por 'sad'
+Célula [8, 8]
+	 Nome: N. Gerada por 'song'
+	 Nome: NP. Gerada por 'song'
+Célula [9, 9]
+	 Nome: Conj. Gerada por 'and'
+Célula [10, 10]
+	 Nome: Det. Gerada por 'the'
+Célula [11, 11]
+	 Nome: N. Gerada por 'women'
+	 Nome: NP. Gerada por 'women'
+Célula [12, 12]
+	 Nome: VI. Gerada por 'sing'
+	 Nome: VP. Gerada por 'sing'
+	 Nome: VT. Gerada por 'sing'
+Célula [13, 13]
+	 Nome: Det. Gerada por 'a'
+Célula [14, 14]
+	 Nome: N. Gerada por 'song'
+	 Nome: NP. Gerada por 'song'
+Célula [0, 1]
+	 Célula vazia.
+Célula [1, 2]
+	 Nome: _V3_. Gerada por Adj(1, 1) e N(2, 2).
+Célula [2, 3]
+	 Célula vazia.
+Célula [3, 4]
+	 Nome: _V0_. Gerada por Conj(3, 3) e N(4, 4).
+	 Nome: _V4_. Gerada por Conj(3, 3) e NP(4, 4).
+Célula [4, 5]
+	 Nome: S. Gerada por NP(4, 4) e VP(5, 5).
+Célula [5, 6]
+	 Célula vazia.
+Célula [6, 7]
+	 Célula vazia.
+Célula [7, 8]
+	 Nome: _V3_. Gerada por Adj(7, 7) e N(8, 8).
+Célula [8, 9]
+	 Célula vazia.
+Célula [9, 10]
+	 Célula vazia.
+Célula [10, 11]
+	 Nome: NP. Gerada por Det(10, 10) e N(11, 11).
+Célula [11, 12]
+	 Nome: S. Gerada por NP(11, 11) e VP(12, 12).
+Célula [12, 13]
+	 Célula vazia.
+Célula [13, 14]
+	 Nome: NP. Gerada por Det(13, 13) e N(14, 14).
+Célula [0, 2]
+	 Nome: NP. Gerada por Det(0, 0) e _V3_(1, 2).
+Célula [1, 3]
+	 Célula vazia.
+Célula [2, 4]
+	 Nome: N. Gerada por N(2, 2) e _V0_(3, 4).
+	 Nome: NP. Gerada por N(2, 2) e _V0_(3, 4).
+	 Nome: NP. Gerada por NP(2, 2) e _V4_(3, 4).
+Célula [3, 5]
+	 Nome: _V1_. Gerada por Conj(3, 3) e S(4, 5).
+Célula [4, 6]
+	 Célula vazia.
+Célula [5, 7]
+	 Célula vazia.
+Célula [6, 8]
+	 Nome: NP. Gerada por Det(6, 6) e _V3_(7, 8).
+Célula [7, 9]
+	 Célula vazia.
+Célula [8, 10]
+	 Célula vazia.
+Célula [9, 11]
+	 Nome: _V4_. Gerada por Conj(9, 9) e NP(10, 11).
+Célula [10, 12]
+	 Nome: S. Gerada por NP(10, 11) e VP(12, 12).
+Célula [11, 13]
+	 Célula vazia.
+Célula [12, 14]
+	 Nome: VP. Gerada por VT(12, 12) e NP(13, 14).
+Célula [0, 3]
+	 Célula vazia.
+Célula [1, 4]
+	 Nome: _V3_. Gerada por Adj(1, 1) e N(2, 4).
+Célula [2, 5]
+	 Nome: S. Gerada por NP(2, 4) e VP(5, 5).
+	 Nome: S. Gerada por NP(2, 4) e VP(5, 5).
+Célula [3, 6]
+	 Célula vazia.
+Célula [4, 7]
+	 Célula vazia.
+Célula [5, 8]
+	 Nome: VP. Gerada por VT(5, 5) e NP(6, 8).
+Célula [6, 9]
+	 Célula vazia.
+Célula [7, 10]
+	 Célula vazia.
+Célula [8, 11]
+	 Nome: NP. Gerada por NP(8, 8) e _V4_(9, 11).
+Célula [9, 12]
+	 Nome: _V1_. Gerada por Conj(9, 9) e S(10, 12).
+Célula [10, 13]
+	 Célula vazia.
+Célula [11, 14]
+	 Nome: S. Gerada por NP(11, 11) e VP(12, 14).
+Célula [0, 4]
+	 Nome: NP. Gerada por Det(0, 0) e _V3_(1, 4).
+	 Nome: NP. Gerada por NP(0, 2) e _V4_(3, 4).
+Célula [1, 5]
+	 Célula vazia.
+Célula [2, 6]
+	 Célula vazia.
+Célula [3, 7]
+	 Célula vazia.
+Célula [4, 8]
+	 Nome: S. Gerada por NP(4, 4) e VP(5, 8).
+Célula [5, 9]
+	 Célula vazia.
+Célula [6, 10]
+	 Célula vazia.
+Célula [7, 11]
+	 Célula vazia.
+Célula [8, 12]
+	 Nome: S. Gerada por NP(8, 11) e VP(12, 12).
+Célula [9, 13]
+	 Célula vazia.
+Célula [10, 14]
+	 Nome: S. Gerada por NP(10, 11) e VP(12, 14).
+Célula [0, 5]
+	 Nome: S. Gerada por NP(0, 4) e VP(5, 5).
+	 Nome: S. Gerada por NP(0, 4) e VP(5, 5).
+Célula [1, 6]
+	 Célula vazia.
+Célula [2, 7]
+	 Célula vazia.
+Célula [3, 8]
+	 Nome: _V1_. Gerada por Conj(3, 3) e S(4, 8).
+Célula [4, 9]
+	 Célula vazia.
+Célula [5, 10]
+	 Célula vazia.
+Célula [6, 11]
+	 Nome: NP. Gerada por NP(6, 8) e _V4_(9, 11).
+Célula [7, 12]
+	 Célula vazia.
+Célula [8, 13]
+	 Célula vazia.
+Célula [9, 14]
+	 Nome: _V1_. Gerada por Conj(9, 9) e S(10, 14).
+Célula [0, 6]
+	 Célula vazia.
+Célula [1, 7]
+	 Célula vazia.
+Célula [2, 8]
+	 Nome: S. Gerada por NP(2, 4) e VP(5, 8).
+	 Nome: S. Gerada por NP(2, 4) e VP(5, 8).
+Célula [3, 9]
+	 Célula vazia.
+Célula [4, 10]
+	 Célula vazia.
+Célula [5, 11]
+	 Nome: VP. Gerada por VT(5, 5) e NP(6, 11).
+Célula [6, 12]
+	 Nome: S. Gerada por NP(6, 11) e VP(12, 12).
+Célula [7, 13]
+	 Célula vazia.
+Célula [8, 14]
+	 Nome: S. Gerada por NP(8, 11) e VP(12, 14).
+Célula [0, 7]
+	 Célula vazia.
+Célula [1, 8]
+	 Célula vazia.
+Célula [2, 9]
+	 Célula vazia.
+Célula [3, 10]
+	 Célula vazia.
+Célula [4, 11]
+	 Nome: S. Gerada por NP(4, 4) e VP(5, 11).
+Célula [5, 12]
+	 Nome: _V2_. Gerada por VP(5, 8) e _V1_(9, 12).
+Célula [6, 13]
+	 Célula vazia.
+Célula [7, 14]
+	 Célula vazia.
+Célula [0, 8]
+	 Nome: S. Gerada por NP(0, 4) e VP(5, 8).
+	 Nome: S. Gerada por NP(0, 4) e VP(5, 8).
+Célula [1, 9]
+	 Célula vazia.
+Célula [2, 10]
+	 Célula vazia.
+Célula [3, 11]
+	 Nome: _V1_. Gerada por Conj(3, 3) e S(4, 11).
+Célula [4, 12]
+	 Nome: S. Gerada por NP(4, 4) e _V2_(5, 12).
+Célula [5, 13]
+	 Célula vazia.
+Célula [6, 14]
+	 Nome: S. Gerada por NP(6, 11) e VP(12, 14).
+Célula [0, 9]
+	 Célula vazia.
+Célula [1, 10]
+	 Célula vazia.
+Célula [2, 11]
+	 Nome: S. Gerada por NP(2, 4) e VP(5, 11).
+	 Nome: S. Gerada por NP(2, 4) e VP(5, 11).
+Célula [3, 12]
+	 Nome: _V1_. Gerada por Conj(3, 3) e S(4, 12).
+Célula [4, 13]
+	 Célula vazia.
+Célula [5, 14]
+	 Nome: _V2_. Gerada por VP(5, 8) e _V1_(9, 14).
+Célula [0, 10]
+	 Célula vazia.
+Célula [1, 11]
+	 Célula vazia.
+Célula [2, 12]
+	 Nome: S. Gerada por NP(2, 4) e _V2_(5, 12).
+	 Nome: S. Gerada por NP(2, 4) e _V2_(5, 12).
+Célula [3, 13]
+	 Célula vazia.
+Célula [4, 14]
+	 Nome: S. Gerada por NP(4, 4) e _V2_(5, 14).
+Célula [0, 11]
+	 Nome: S. Gerada por NP(0, 4) e VP(5, 11).
+	 Nome: S. Gerada por NP(0, 4) e VP(5, 11).
+Célula [1, 12]
+	 Célula vazia.
+Célula [2, 13]
+	 Célula vazia.
+Célula [3, 14]
+	 Nome: _V1_. Gerada por Conj(3, 3) e S(4, 14).
+Célula [0, 12]
+	 Nome: S. Gerada por NP(0, 4) e _V2_(5, 12).
+	 Nome: S. Gerada por NP(0, 4) e _V2_(5, 12).
+Célula [1, 13]
+	 Célula vazia.
+Célula [2, 14]
+	 Nome: S. Gerada por NP(2, 4) e _V2_(5, 14).
+	 Nome: S. Gerada por NP(2, 4) e _V2_(5, 14).
+Célula [0, 13]
+	 Célula vazia.
+Célula [1, 14]
+	 Célula vazia.
+Célula [0, 14]
+	 Nome: S. Gerada por NP(0, 4) e _V2_(5, 14).
+	 Nome: S. Gerada por NP(0, 4) e _V2_(5, 14).
+S( 
+   NP( 
+      Det(the), 
+      _V3_( 
+         Adj(old), 
+         N( 
+            N(men), 
+            _V0_( 
+               Conj(and), 
+               N(women))))), 
+   _V2_( 
+      VP( 
+         VT(sing), 
+         NP( 
+            Det(a), 
+            _V3_( 
+               Adj(sad), 
+               N(song)))), 
+      _V1_( 
+         Conj(and), 
+         S( 
+            NP( 
+               Det(the), 
+               N(women)), 
+            VP( 
+               VT(sing), 
+               NP( 
+                  Det(a), 
+                  N(song)))))))
+S( 
+   NP( 
+      NP( 
+         Det(the), 
+         _V3_( 
+            Adj(old), 
+            N(men))), 
+      _V4_( 
+         Conj(and), 
+         NP(women))), 
+   _V2_( 
+      VP( 
+         VT(sing), 
+         NP( 
+            Det(a), 
+            _V3_( 
+               Adj(sad), 
+               N(song)))), 
+      _V1_( 
+         Conj(and), 
+         S( 
+            NP( 
+               Det(the), 
+               N(women)), 
+            VP( 
+               VT(sing), 
+               NP( 
+                  Det(a), 
+                  N(song)))))))

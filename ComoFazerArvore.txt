@@ -1,0 +1,2 @@
+dot -Tps <nomeArquivoArvore> -o <nomeArquivoSaida>
+tem que ter o GraphViz (sudo apt-get install graphviz)

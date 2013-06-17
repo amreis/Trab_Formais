@@ -116,7 +116,7 @@ def excluiVazioRegra(esquerda, lTokens, regras, lVazios):
         # Para cada entrada da lista, substitui a variável correspondente pela 
         # string vazia.
         l2 = list(lTokens)
-        print l2
+
         del l2[i]
         s = " ".join(l2)
         #s = direita.replace(vaziosNaRegra[i], '', 1)
@@ -500,8 +500,7 @@ if __name__ == '__main__':
             processaRegras(i+1)
             break
     
-    simplify(regras)
-    printRegras(regras)
+    simplify(regras)	
     transformToCNF(regras)
     assert isCNF(regras)
     printRegras(regras)

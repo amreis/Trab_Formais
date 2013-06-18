@@ -43,7 +43,7 @@ def achaTerminais(linhaTerminais):
     terminais.append('&') # Palavra vazia deve ser considerada um terminal para
                           # que a função tokenize funcione corretamente
     for ter in linhaTerminais.strip('{ ,}\n').split(', '):
-        terminais.append(ter.lower().strip())
+        terminais.append(ter.strip())
 
 def achaVariaveis(linhaVariaveis):
     """
@@ -70,6 +70,7 @@ def processaRegras(linhaInicial):
     for i in range(linhaInicial, len(arquivo)):
         # Tira os delimitadores da regra e os separadores de variáveis
         linha = arquivo[i].strip('{ ,}\n').replace(',', '')
+        print linha
         regra = linha.partition('}')[0]
         # Separa a regra em esquerda e direita.
         esquerda, dummy,  direita = regra.partition(' > ')
@@ -77,11 +78,15 @@ def processaRegras(linhaInicial):
             if (regras[esquerda] == None): regras[esquerda] = []
         except KeyError:
             regras[esquerda] = []
+
+        direita = direita.replace('  ', ' ')
         # Se a produção já foi processada, vai para a próxima
-        if direita.strip() in regras[esquerda]:
+        if direita.strip('{ ,}\n') in regras[esquerda]:
             continue
         # Senão, adiciona nas produções daquela variável.
-        regras[esquerda].append(direita.strip())
+
+        
+        regras[esquerda].append(direita.strip('{ ,}\n'))
         
 def found(word, listOfLists):
     """
@@ -111,6 +116,12 @@ def excluiVazioRegra(esquerda, lTokens, regras, lVazios):
     # Acha, dentre todas as variáveis que geram palavra vazia, quais estão nesta
     # regra.
     vaziosNaRegra = [t for t in lVazios if t in lTokens]
+    try:
+        while True:
+            lTokens.remove('')
+    except ValueError:
+        pass
+
     # Forma a palavra novamente a partir dos seus tokens.
     direita = ' '.join(lTokens)
     # Cria uma lista com n entradas, onde n é o número de variáveis que levam 
@@ -122,7 +133,9 @@ def excluiVazioRegra(esquerda, lTokens, regras, lVazios):
         l2 = list(lTokens)
 
         del l2[i]
+
         s = " ".join(l2)
+
         #s = direita.replace(vaziosNaRegra[i], '', 1)
         # Põe de volta na lista.
         lista[i] = s
@@ -132,6 +145,7 @@ def excluiVazioRegra(esquerda, lTokens, regras, lVazios):
         for y in excluiVazioRegra(esquerda, tokenize(x), regras, lVazios):
             if y not in lista:
                 lista.append(y)
+
     return lista
     
 def tiraVazios(regras):
@@ -196,7 +210,8 @@ def simplify(regras):
     """
     # Produções vazias.
     tiraVazios(regras)
-
+    print "Depois de tirar os vazios..."
+    printRegras(regras)
     # Produções que substituem variáveis.
     tiraTransfVariaveis(regras)
     
@@ -428,7 +443,7 @@ def getVariables(terminal, pos):
     return lista
     
 def parseCYK(frase, regras):
-    splitted = frase.lower().strip().split(' ')
+    splitted = frase.strip().split(' ')
     n = len(splitted)
 
     matriz = [[[] for x in range(n)] for y in range(n)]
@@ -554,12 +569,15 @@ if __name__ == '__main__':
 
         elif arquivo[i] == "Inicial":
             inicial = arquivo[i+1].strip('{ ,}\n').split(', ')[0] #OMG
+            print "Inicial: "+ inicial
 
         elif arquivo[i] == "Regras":
             processaRegras(i+1)
             break
     
-    simplify(regras)	
+    printRegras(regras)
+    simplify(regras)
+    printRegras(regras)
     transformToCNF(regras)
     assert isCNF(regras)
     printRegras(regras)

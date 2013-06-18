@@ -1,0 +1,23 @@
+Terminais
+{He, the, pepper, pizza, with, ate, hot, cold}
+Variaveis
+{S, NP, VP, DET, N, PP, P, Adj, V}
+Inicial
+{S}
+Regras
+{S > NP , VP} ; 
+{NP > DET , N} ; 
+{NP > NP , PP} ; 
+{PP > P , NP} ; 
+{VP > V , NP} ; 
+{VP > V} ; 
+{VP > VP , PP} ; 
+{DET > the} ; 
+{DET > &} ; 
+{NP > He} ; 
+{N > pepper} ; 
+{N > pizza} ; 
+{P > with} ; 
+{V > ate} ; 
+{Adj > hot} ; 
+{Adj > cold} ; 

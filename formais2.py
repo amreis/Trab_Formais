@@ -2,6 +2,7 @@
 import sys
 import pygraphviz as pgv
 import random
+import pydot
 #lalalallala
 
 
@@ -517,7 +518,7 @@ def criaGrafo (x,tree,usados,indice):
         
     if x.nome not in terminais:    
         print x.nome
-        tree.add_node(x.nome, label=x.nome)
+        tree.add_node(x.nome)
         #    tree.add_edge(1,2)
         criaGrafo (x.esquerda,tree,usados,indice)
         criaGrafo (x.direita,tree,usados,indice)
@@ -585,37 +586,4 @@ if __name__ == '__main__':
                 flag = 1
     if flag == 0:
         print "Palavra não pertence à linguagem."
-        
-    
-    tree = pgv.AGraph(directed=True, strict=True)
 
-    usados = []
-    indice=1
-    for x in result[0][n-1]:
-        criaGrafo (x,tree,usados,indice)    
-    
-    f = 'tree.dot'
-    
-    
-    
-
-    
-    
-#    tree.add_node(1, label=2)
-#    tree.add_node(2, label=3)
-#    tree.add_node(3, label=1)
-#    tree.add_node(4, label=7)
-#    tree.add_node(5, label=3)
-#    tree.add_edge(1,2)
-#    tree.add_edge(1,3)
-#    tree.add_edge(2,4)
-#    tree.add_edge(2,5)
-
-
-
-    tree.write(f)
-
-    img = pgv.AGraph(f)
-    img.layout('dot')
-    img.draw(f.split('.')[0] + '.pdf')
-    img.close()
